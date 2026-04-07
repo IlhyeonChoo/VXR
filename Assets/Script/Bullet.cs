@@ -18,4 +18,15 @@ public class Bullet : MonoBehaviour
     {
         
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.Die();
+            }
+        }
+    }
 }

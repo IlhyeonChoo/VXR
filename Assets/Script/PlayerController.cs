@@ -22,21 +22,10 @@ public class PlayerController : MonoBehaviour
         Vector3 newVelocity = new Vector3(xSpeed, 0, zSpeed);
         playerRigidbody.linearVelocity = newVelocity;
 
-        /*if (Input.GetKey(KeyCode.W))
-        {
-            playerRigidbody.linearVelocity  = new Vector3(0, 0, speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            playerRigidbody.linearVelocity = new Vector3(0, 0, -speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            playerRigidbody.linearVelocity = new Vector3(-speed, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            playerRigidbody.linearVelocity = new Vector3(speed, 0, 0);
-        }*/
+    }
+
+    public void Die()
+    {
+        this.gameObject.SetActive(false);
     }
 }
