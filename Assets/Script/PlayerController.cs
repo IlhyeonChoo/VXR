@@ -27,5 +27,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         this.gameObject.SetActive(false);
+        GameManager gameManager = FindAnyObjectByType<GameManager>();
+        gameManager.EndGame();
     }
 }
