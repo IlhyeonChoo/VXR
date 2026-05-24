@@ -1,5 +1,6 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class BulletSpawner : MonoBehaviour
 {
@@ -10,12 +11,17 @@ public class BulletSpawner : MonoBehaviour
     Transform target; // Player의 위치
     float spawnRate;
     float timeAfterSpawn; // 스폰 타이머
+    float spawnerHealth = 5f; // 스포너의 체력
+    public Slider healthSlider; // 스포너의 체력을 표시할 UI 슬라이더
 
     void Start()
     {
         timeAfterSpawn = 0f;
         spawnRate = Random.Range(spawnRateMin, spawnRateMax); // 스폰 간격을 랜덤으로 설정
         target = FindFirstObjectByType<PlayerController>().transform; // PlayerController 스크립트가 붙어있는 오브젝트를 찾아서 그 위치를 타겟으로 설정
+        healthSlider = this.GetComponentInChildren<Slider>();
+        healthSlider.maxValue = spawnerHealth;
+        healthSlider.value = spawnerHealth;
     }
 
     // Update is called once per frame
@@ -32,5 +38,30 @@ public class BulletSpawner : MonoBehaviour
 
             spawnRate = Random.Range(spawnRateMin, spawnRateMax); // 다음 스폰 간격을 랜덤으로 설정한다.
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        spawnerHealth -= damage;
+        healthSlider.value = spawnerHealth;
+        if (spawnerHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        BulletSpawner[] spawners = FindObjectsByType<BulletSpawner>(FindObjectsSortMode.None);
+
+        if (spawners.Length <= 1)
+        {
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            if (gameManager != null)
+            {
+                gameManager.ClearGame();
+            }
+        }
+        Destroy(this.gameObject);
     }
 }

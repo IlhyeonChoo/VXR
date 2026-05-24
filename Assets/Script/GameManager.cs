@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class GameManager : MonoBehaviour
 {
     public GameObject gameoverText;
+    public GameObject gameclearText;
     public Text timeText;
 
     float surviveTime;
@@ -36,5 +39,11 @@ public class GameManager : MonoBehaviour
     {
         isGameover = true;
         gameoverText.SetActive(true);
+    }
+
+    public void ClearGame()
+    {
+        isGameover = true;
+        gameclearText.SetActive(true);
     }
 }
